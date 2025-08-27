@@ -1,8 +1,5 @@
 PRIMEIRO ARQUIVO ├── IncomingCall.cs       → Classe IncomingCall
 
-IncomingCall.cs
-csharp
-Copiar código
 using System;
 
 public class IncomingCall
@@ -12,7 +9,7 @@ public class IncomingCall
     public DateTime CallTime { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
-    public string Consultant { get; set; }
+    public string? Consultant { get; set; }
 }
 
 
@@ -25,9 +22,6 @@ public class IncomingCall
 
 SEGUNDO ARQUIVO └── CallCenter.cs         → Classe CallCenter
 
-CallCenter.cs
-csharp
-Copiar código
 using System;
 using System.Collections.Generic;
 
@@ -52,7 +46,7 @@ public class CallCenter
         Calls.Enqueue(call);
     }
 
-    public IncomingCall Answer(string consultant)
+    public IncomingCall? Answer(string consultant)
     {
         if (Calls.Count > 0)
         {
@@ -83,9 +77,6 @@ public class CallCenter
 
 TERCEIRO ARQUIVO ├── Program.cs            → Contém o método Main
 
-Program.cs
-csharp
-Copiar código
 using System;
 using System.Threading;
 
@@ -96,20 +87,28 @@ class Program
         Random random = new Random();
         CallCenter center = new CallCenter();
 
+        // Simulando chamadas de clientes
         center.Call(1234);
         center.Call(5678);
         center.Call(1468);
         center.Call(9641);
 
+        // Atendimento das chamadas
         while (center.AreWaitingCalls())
         {
-            IncomingCall call = center.Answer("Marcin");
-            Log($"A chamada nº {call.Id} de {call.ClientId} foi atendida por {call.Consultant}.");
+            IncomingCall? call = center.Answer("Marcin"); // Pode retornar null
 
-            Thread.Sleep(random.Next(1000, 10000));
+            // Verifica se a chamada não é null antes de acessar
+            if (call != null)
+            {
+                Log($"A chamada nº {call.Id} de {call.ClientId} foi atendida por {call.Consultant}.");
 
-            center.End(call);
-            Log($"A chamada nº {call.Id} de {call.ClientId} foi encerrada por {call.Consultant}.");
+                // Simula duração da chamada entre 1 e 10 segundos
+                Thread.Sleep(random.Next(1000, 10000));
+
+                center.End(call);
+                Log($"A chamada nº {call.Id} de {call.ClientId} foi encerrada por {call.Consultant}.");
+            }
         }
     }
 
