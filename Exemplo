@@ -5,29 +5,29 @@ class Program
 {
     static void Main()
     {
-        // Criando a fila
+    
         Queue<string> numbers = new Queue<string>();
 
-        // Adicionando elementos
+      
         numbers.Enqueue("one");
         numbers.Enqueue("two");
         numbers.Enqueue("three");
         numbers.Enqueue("four");
         numbers.Enqueue("five");
 
-        // Percorrendo a fila
+      
         Console.WriteLine("Fila inicial:");
         foreach (string number in numbers)
         {
             Console.WriteLine(number);
         }
 
-        // Dequeue e Peek
+      
         Console.WriteLine($"\nDequeuing '{numbers.Dequeue()}'");
         Console.WriteLine($"Peek: {numbers.Peek()}");
         Console.WriteLine($"Dequeuing '{numbers.Dequeue()}'");
 
-        // Copiando a fila
+        
         Queue<string> queueCopy = new Queue<string>(numbers.ToArray());
         Console.WriteLine("\nConteúdo da cópia:");
         foreach (string number in queueCopy)
@@ -35,7 +35,7 @@ class Program
             Console.WriteLine(number);
         }
 
-        // CopyTo e segunda fila
+       
         string[] array2 = new string[numbers.Count * 2];
         numbers.CopyTo(array2, numbers.Count);
         Queue<string> queueCopy2 = new Queue<string>(array2);
@@ -46,7 +46,7 @@ class Program
             Console.WriteLine(number ?? "null");
         }
 
-        // Contains e Clear
+      
         Console.WriteLine($"\nqueueCopy contém 'four'? {queueCopy.Contains("four")}");
         queueCopy.Clear();
         Console.WriteLine($"queueCopy.Count = {queueCopy.Count}");
